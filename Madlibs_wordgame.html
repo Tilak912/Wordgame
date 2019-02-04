@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<head>
+<link href='https://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+    h2 {
+        text-align: center;
+        font size: 35px;
+    }
+  body {
+    text-align: center;
+    font-size: 20px;
+    font-family: 'Fjalla One';
+    background: url("background.png");
+  }
+  button {
+    margin: 40px;
+  }
+  input {
+    font-size: 24px;
+  }
+  .fill {
+    background: white;
+    color: red;
+    border-bottom: 2px black solid;
+    font-family: 'Shadows Into Light';
+    padding: 0 6px;
+    margin: 4px;
+  }
+    .end {
+        font-size: 40px;
+        text-shadow: 2px 2px #ff0000;
+    }
+</style>
+</head>
+
+<body>
+    <h2>Welcome to the Wordgame</h2>
+    <div class="prompt"></div>
+    <button>Next</button>
+    <script>
+        // List of prompts for the user
+        var prompts = [
+            'Type your name',
+            'Type your Roll no',
+            'Type your course',
+            'Type your collage name',
+            'Type your quality feature',
+            'Write your future goal'
+           ];
+
+        var answers=[];
+        // Keep track of current prompt we're on
+        var currentPrompt = 0;
+
+        // A function that will call the next prompt
+        var nextPrompt = function() {
+          //if there's no answer in the form
+            if (currentPrompt != 0){
+                answers.push($('input').val());
+            }
+            // if there is a next prompt
+            if (currentPrompt < prompts.length) {
+                // put first prompt in all html elements with class 
+                $('.prompt').html(prompts[currentPrompt] +'<br><input type="text">');
+                // move the next prompt into variable currentPrompt 
+                currentPrompt = currentPrompt + 1;
+            }
+            //or else if we're at the end of the array
+            else {
+                // put a new message into the html.
+                showFinal();
+            }
+        }
+
+        //puts user answers into HTML
+        var showFinal = function() {
+          $('.prompt').html('Your name is <span class="fill">'+answers[0]+'</span>. Your roll number is <span class="fill">'+answers[1]+'</span>, and you are studying <span class="fill">'+answers[2]+'</span> in <span class="fill">'+answers[3]+' </span>. You are very <span class="fill">'+answers[4]+' </span>and you want to become <span class="fill">'+answers[5]+' </span>in future.<br><br><span class="end">Thank you for playing this game</span>');
+            
+          $('button').hide();
+        }
+        // run nextPrompt function when button is clicked
+        $('button').click(function() {
+            nextPrompt();
+        });
+
+        // Show the first prompt as soon as js loads
+        nextPrompt();
+    </script>
+
+</body>
